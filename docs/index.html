@@ -119,7 +119,7 @@
         const languageIconMap = { 'CSharp': 'CSharp', 'Java': 'Java', 'C': 'C', 'CPlusPlus': 'CPlusPlus', 'Python': 'Python', 'Javascript': 'Js', 'Go': 'Go', 'Rust': 'Rust', 'MathJax': 'Math' };
         const highlightJsMap = { 'CSharp': 'language-csharp', 'Java': 'language-java', 'C': 'language-c', 'CPlusPlus': 'language-cpp', 'Python': 'language-python', 'Javascript': 'language-javascript', 'Go': 'language-go', 'Rust': 'language-rust', 'MathJax': 'language-latex' };
         
-        function getIconPath(lang) { return `https://raw.githubusercontent.com/user/repo/main/images/Icon_ProgLanguage__256x256_${languageIconMap[lang] || ''}.png`; }
+        function getIconPath(lang) { return `images/Icon_ProgLanguage__256x256_${languageIconMap[lang] || ''}.png`; }
         function getHighlightJsClass(lang) { return highlightJsMap[lang] || 'language-plaintext'; }
 
         async function selectModel(button, modelTitle, path) {
