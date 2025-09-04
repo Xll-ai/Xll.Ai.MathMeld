@@ -1,1 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathMeld Model Gallery</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link id="hljs-dark-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link id="hljs-light-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0d1117; --text-color: #c9d1d9; --header-color: #58a6ff; --border-color: #30363d;
+            --tab-text-color: #8b949e; --tab-active-color: #c9d1d9; --tab-hover-bg: #161b22; --code-bg-color: #161b22;
+            --side-menu-bg: #161b22; --side-menu-text: #8b949e; --side-menu-hover-bg: #21262d; --side-menu-active-bg: #0d1117;
+        }
+        body.light-theme {
+            --bg-color: #ffffff; --text-color: #24292f; --header-color: #0969da; --border-color: #d0d7de;
+            --tab-text-color: #57606a; --tab-active-color: #24292f; --tab-hover-bg: #f6f8fa; --code-bg-color: #f6f8fa;
+            --side-menu-bg: #f6f8fa; --side-menu-text: #57606a; --side-menu-hover-bg: #eaeef2; --side-menu-active-bg: #ffffff;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: var(--bg-color); color: var(--text-color); user-select: none; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
+        h1 { font-size: 1.5em; color: var(--header-color); margin: 0; }
+        .main-container { display: flex; flex-grow: 1; overflow: hidden; }
+        .side-menu { width: 250px; background-color: var(--side-menu-bg); border-right: 1px solid var(--border-color); flex-shrink: 0; overflow-y: auto; padding: 10px 0; }
+        .side-menu h2 { font-size: 1em; padding: 10px 15px; margin: 0; color: var(--header-color); }
+        .side-menu ul { list-style: none; padding: 0; margin: 0; }
+        .side-menu li button { width: 100%; text-align: left; background: none; border: none; color: var(--side-menu-text); padding: 12px 15px; font-size: 0.9em; cursor: pointer; }
+        .side-menu li button:hover { background-color: var(--side-menu-hover-bg); }
+        .side-menu li button.active { background-color: var(--side-menu-active-bg); font-weight: bold; color: var(--tab-active-color); }
+        .content-area { display: flex; flex-direction: column; flex-grow: 1; }
+        .selector-bar { display: flex; justify-content: space-around; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); background-color: var(--bg-color);}
+        .lang-button { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 8px; cursor: pointer; background-color: transparent; border: none; border-radius: 6px; color: var(--tab-text-color); font-size: 12px; min-width: 80px; }
+        .lang-button:hover { background-color: var(--tab-hover-bg); color: var(--tab-active-color); }
+        .gallery-container { display: flex; flex-grow: 1; }
+        .pane { width: 50%; display: flex; flex-direction: column; flex-shrink: 0; transition: width 0.3s ease-in-out; }
+        .pane-header { display: flex; align-items: center; gap: 8px; padding: 10px 15px; border-bottom: 1px solid var(--border-color); font-weight: 600; background-color: var(--code-bg-color); cursor: pointer; }
+        .pane-content { flex-grow: 1; overflow: auto; padding: 1em; }
+        .mathjax-container { font-family: Georgia, serif; font-size: 1.1em; line-height: 2.5; }
+        pre { height: 100%; margin: 0; }
+        code.hljs { height: 100%; box-sizing: border-box; background-color: var(--bg-color); border: none; padding: 0; white-space: pre-wrap; }
+        .splitter { width: 5px; cursor: col-resize; background-color: var(--border-color); flex-shrink: 0; }
+        .splitter:hover { background-color: var(--header-color); }
+        .theme-toggle { background: none; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; padding: 5px; display: flex; align-items:center;}
+        .theme-toggle svg { width: 16px; height: 16px; fill: var(--tab-text-color); }
+        .theme-toggle .icon-sun { display: none; }
+        body.light-theme .theme-toggle .icon-sun { display: block; }
+        body.light-theme .theme-toggle .icon-moon { display: none; }
+
+        @media (max-width: 768px) {
+            .side-menu { width: 180px; }
+            .selector-bar { flex-wrap: wrap; justify-content: center; gap: 5px; padding: 10px 5px; }
+            .lang-button { flex-basis: 18%; min-width: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class='header'>
+        <h1 id='main-title'>MathMeld Model Gallery</h1>
+        <button class='theme-toggle' onclick='window.mathmeld.toggleTheme()' aria-label='Toggle theme'><svg class='icon-sun' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zm-9-8c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1v2c0 .55.45 1 1 1zm0 16c.55 0 1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1v2c0 .55.45 1 1 1zM5.64 5.64c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41L5.64 2.81C5.25 2.42 4.62 2.42 4.23 2.81c-.39.39-.39 1.02 0 1.41L5.64 5.64zm12.72 12.72c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-1.41-1.41c-.39-.39-1.02-.39-1.41 0s-.39 1.02 0 1.41l1.41 1.41zM4.23 19.77c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41l-1.41-1.41c-.39-.39-1.02-.39-1.41 0s-.39 1.02 0 1.41l1.41 1.41zm14.14-14.14c.39-.39.39-1.02 0-1.41s-1.02-.39-1.41 0l-1.41 1.41c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l1.41-1.41z'/></svg><svg class='icon-moon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.62-.14 2.37-.38-.2-.3-.37-.62-.5-.96-.4-1.12-.62-2.31-.62-3.54 0-4.42 3.58-8 8-8 .91 0 1.78.16 2.59.45.22.08.45.13.68.17.02-.02.04-.04.05-.06C20.03 7.37 16.5 3 12 3z'/></svg></button>
+    </div>
+
+    <div class='main-container'>
+        <nav class='side-menu'>
+            <h2>Models</h2>
+            <ul id='model-list'></ul>
+        </nav>
+
+        <div class='content-area'>
+            <div class="selector-bar"></div>
+            <div class='gallery-container'>
+                <div id='left-pane' class='pane'><div class='pane-header'></div><div class='pane-content'></div></div>
+                <div class='splitter'></div>
+                <div id='right-pane' class='pane'><div class='pane-header'></div><div class='pane-content'></div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Embedded default model data for instant loading and fallback
+        window.defaultMathMeldPack = {
+            "id": "black-scholes", "title": "Black–Scholes (1973) — MathMeld Pack", "tags": ["finance", "closed-form"],
+            "snippets": [
+                { "id": "tpl-C-Simple", "language": "C", "variant": "Simple", "title": "C — Simple", "code": "// expects math_runtime.h to define erf_impl, cdf_impl, print_fixed\n#include <stdio.h>\n#include <math.h>\n#include <stdlib.h>\n#include \"math_runtime.h\"\n\nint main(void) {\n    double S = 100, K = 100, T = 1, r = 0.05, v = 0.2,\n        d1 = ((log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * sqrt(T))),\n        d2 = (d1 - (v * sqrt(T)));\n    print_fixed(((S * cdf_impl(d1)) - (K * (exp((-(r * T))) * cdf_impl(d2)))));\n    return 0;\n}\n" },
+                { "id": "tpl-CPlusPlus-Simple", "language": "CPlusPlus", "variant": "Simple", "title": "CPlusPlus — Simple", "code": "#include <cmath>\n#include <cstddef>\nint main() {\n    auto S = 100;\n    auto K = 100;\n    auto T = 1;\n    auto r = 0.05;\n    auto v = 0.2;\n    auto d1 = ((log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * sqrt(T)));\n    auto d2 = (d1 - (v * sqrt(T)));\n    print_fixed(((S * cdf(d1)) - (K * (exp((-(r * T))) * cdf(d2)))));\n    return 0;\n}\n" },
+                { "id": "tpl-CSharp-Simple", "language": "CSharp", "variant": "Simple", "title": "CSharp — Simple", "code": "using System;\nusing System.Globalization;\npublic static class Program {\n  public static void Main(){\n    double S = 100;\n    double K = 100;\n    double T = 1;\n    double r = 0.05;\n    double v = 0.2;\n    double d1 = ((Math.Log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * Math.Sqrt(T)));\n    double d2 = (d1 - (v * Math.Sqrt(T)));\n    double price = ((S * MathRt.Cdf(d1)) - (K * (Math.Exp((-(r * T))) * MathRt.Cdf(d2))));\n    Console.WriteLine(MathRt.PrintFixed(price));\n  }\n}\n" },
+                { "id": "tpl-Go-Simple", "language": "Go", "variant": "Simple", "title": "Go — Simple", "code": "package main\n\n// expects mathruntime package with Erf, Cdf, PrintFixed, Powi, DotProduct, VectorNorm\nimport (\n    \"math\"\n    \"./mathruntime\"\n)\n\nfunc main() {\n    var (\n        S = 100\n        K = 100\n        T = 1\n        r = 0.05\n        v = 0.2\n        d1 = ((math.Log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * math.Sqrt(T)))\n        d2 = (d1 - (v * math.Sqrt(T)))\n    )\n    mathruntime.PrintFixed (((S * mathruntime.Cdf (d1)) - (K * (math.Exp ((- (r * T))) * mathruntime.Cdf (d2)))))\n}\n" },
+                { "id": "tpl-Java-Simple", "language": "Java", "variant": "Simple", "title": "Java — Simple", "code": "// expects MathRuntime class with static methods erf, cdf, printFixed\nimport java.util.*;\nimport java.lang.Math;\n\npublic class GeneratedMath {\n    public static void main(String[] args) {\n        double S = 100.0;\n        double K = 100.0;\n        double T = 1.0;\n        double r = 0.05;\n        double v = 0.2;\n        double d1 = ((Math.log ((S / K)) + ((r + ((v * v) / 2.0)) * T)) / (v * Math.sqrt (T)));\n        double d2 = (d1 - (v * Math.sqrt(T)));\n        MathRuntime.printFixed (((S * MathRuntime.cdf (d1)) - (K * (Math.exp ((-(r * T))) * MathRuntime.cdf (d2)))));\n    }\n}\n" },
+                { "id": "tpl-Javascript-Simple", "language": "Javascript", "variant": "Simple", "title": "Javascript — Simple", "code": "// expects math_runtime.js to define global MathRt {erf,cdf,printFixed}\nlet S = 100, K = 100, T = 1, r = 0.05, v = 0.2,\n    d1 = ((Math.log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * Math.sqrt(T))),\n    d2 = (d1 - (v * Math.sqrt(T)));\nMathRt.printFixed (((S * MathRt.cdf (d1)) - (K * (Math.exp ((- (r * T))) * MathRt.cdf (d2)))));\n" },
+                { "id": "tpl-MathJax-Simple", "language": "MathJax", "variant": "Simple", "title": "MathJax — Simple", "code": "\\begin{align*}\n    \\mathrm{S} &= 100 \\\\\n    \\mathrm{K} &= 100 \\\\\n    \\mathrm{T} &= 1 \\\\\n    \\mathrm{r} &= 0.05 \\\\\n    \\mathrm{v} &= 0.2 \\\\\n    \\mathrm{d}_{1} &= \\frac{\\log\\left(\\frac{\\mathrm{S}}{\\mathrm{K}}\\right) + \\left(\\mathrm{r} + \\frac{\\mathrm{v}^2}{2}\\right)T}{\\mathrm{v}\\sqrt{\\mathrm{T}}} \\\\\n    \\mathrm{d}_{2} &= \\mathrm{d}_{1} - \\mathrm{v}\\sqrt{\\mathrm{T}} \\\\\n    \\mathrm{price} &= \\mathrm{S}\\Phi\\left(\\mathrm{d}_{1}\\right) - \\mathrm{K}\\exp(-\\mathrm{rT})\\Phi\\left(\\mathrm{d}_{2}\\right)\n\\end{align*}" },
+                { "id": "tpl-Python-Simple", "language": "Python", "variant": "Simple", "title": "Python — Simple", "code": "# expects math_runtime module with MathRt class defining erf, cdf, print_fixed\nimport math\nfrom math_runtime import MathRt\n\nif __name__ == '__main__':\n    S = 100\n    K = 100\n    T = 1\n    r = 0.05\n    v = 0.2\n    d1 = ((math.log((S / K)) + ((r + ((v * v) / 2)) * T)) / (v * math.sqrt(T)))\n    d2 = (d1 - (v * math.sqrt(T)))\n    MathRt.print_fixed (((S * MathRt.cdf (d1)) - (K * (math.exp ((- (r * T))) * MathRt.cdf (d2)))))\n" },
+                { "id": "tpl-Rust-Simple", "language": "Rust", "variant": "Simple", "title": "Rust — Simple", "code": "// expects a math_runtime mod with erf/cdf helpers, etc.\nuse std::f64;\n\n// Assuming cdf is defined elsewhere, e.g., in a math_runtime crate\nfn cdf(x: f64) -> f64 {\n    0.5 * (1.0 + (x / std::f64::consts::SQRT_2).erf())\n}\n\nfn main() {\n    let s = 100.0;\n    let k = 100.0;\n    let t = 1.0;\n    let r = 0.05;\n    let v = 0.2;\n    let d1 = ((s / k).ln() + (r + v * v / 2.0) * t) / (v * t.sqrt());\n    let d2 = d1 - v * t.sqrt();\n    let price = s * cdf(d1) - k * (-r * t).exp() * cdf(d2);\n    println!(\"{:.2}\", price);\n}\n" }
+            ]
+        };
+    </script>
+    <script type='module'>
+        const state = {
+            leftLang: 'MathJax',
+            rightLang: 'CSharp',
+            currentModelData: {},
+            iconSize: 24
+        };
+
+        const ui = {
+            mainTitle: document.getElementById('main-title'),
+            modelList: document.getElementById('model-list'),
+            selectorBar: document.querySelector('.selector-bar'),
+            leftPane: document.getElementById('left-pane'),
+            rightPane: document.getElementById('right-pane'),
+            splitter: document.querySelector('.splitter'),
+            lightThemeSheet: document.getElementById('hljs-light-theme'),
+            darkThemeSheet: document.getElementById('hljs-dark-theme')
+        };
+
+        const languageIconMap = { 'CSharp': 'CSharp', 'Java': 'Java', 'C': 'C', 'CPlusPlus': 'CPlusPlus', 'Python': 'Python', 'Javascript': 'Js', 'Go': 'Go', 'Rust': 'Rust', 'MathJax': 'Math' };
+        const highlightJsMap = { 'CSharp': 'language-csharp', 'Java': 'language-java', 'C': 'language-c', 'CPlusPlus': 'language-cpp', 'Python': 'language-python', 'Javascript': 'language-javascript', 'Go': 'language-go', 'Rust': 'language-rust', 'MathJax': 'language-latex' };
+        
+        function getIconPath(lang) { return `https://raw.githubusercontent.com/user/repo/main/images/Icon_ProgLanguage__256x256_${languageIconMap[lang] || ''}.png`; }
+        function getHighlightJsClass(lang) { return highlightJsMap[lang] || 'language-plaintext'; }
+
+        async function selectModel(button, modelTitle, path) {
+            document.querySelectorAll('#model-list button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            ui.mainTitle.textContent = modelTitle;
+
+            let pack;
+            if (path === 'default') {
+                pack = window.defaultMathMeldPack;
+            } else {
+                try {
+                    const module = await import(path);
+                    pack = module.default;
+                } catch (error) {
+                    console.error('Failed to load model:', path, error);
+                    ui.selectorBar.innerHTML = "<p style='color:red'>Error loading model.</p>";
+                    return;
+                }
+            }
+            
+            state.currentModelData = {};
+            pack.snippets.forEach(snippet => {
+                if (!state.currentModelData[snippet.language]) {
+                    state.currentModelData[snippet.language] = {};
+                }
+                state.currentModelData[snippet.language][snippet.variant || 'Simple'] = snippet.code;
+            });
+            
+            populateLanguageSelector(Object.keys(state.currentModelData));
+            updatePanesForNewModel();
+        }
+
+        function populateLanguageSelector(languages) {
+            ui.selectorBar.innerHTML = '';
+            languages.forEach(lang => {
+                const iconPath = getIconPath(lang);
+                const btn = document.createElement('button');
+                btn.className = 'lang-button';
+                btn.onclick = () => selectLanguage(lang);
+                btn.innerHTML = `
+                    <img src='${iconPath}' width='${state.iconSize}' height='${state.iconSize}' alt='${lang} icon' />
+                    <span>${lang}</span>`;
+                ui.selectorBar.appendChild(btn);
+            });
+        }
+        
+        function updatePane(paneSide, langName) {
+            const data = state.currentModelData[langName];
+            if (!data) { 
+                const pane = paneSide === 'left' ? ui.leftPane : ui.rightPane;
+                pane.querySelector('.pane-header').innerHTML = `<span>${langName} not available</span>`;
+                pane.querySelector('.pane-content').innerHTML = '';
+                return;
+            };
+
+            const code = data['Simple'] || data[Object.keys(data)[0]] || `// No code found for ${langName}`;
+            const icon = getIconPath(langName);
+            
+            const pane = paneSide === 'left' ? ui.leftPane : ui.rightPane;
+            const paneHeader = pane.querySelector('.pane-header');
+            const paneContent = pane.querySelector('.pane-content');
+
+            paneHeader.innerHTML = `<img src='${icon}' width='24' height='24' alt='${langName} icon' /><span>${langName}</span>`;
+            
+            if (langName === 'MathJax') {
+                paneContent.innerHTML = `<div class='mathjax-container'>${code}</div>`;
+                if (window.MathJax?.typesetPromise) {
+                   MathJax.typesetPromise([paneContent]).catch((err) => console.log('MathJax Typeset Error:', err.message));
+                }
+            } else {
+                paneContent.innerHTML = `<pre><code class='${getHighlightJsClass(langName)}'></code></pre>`;
+                paneContent.querySelector('code').textContent = code;
+                hljs.highlightElement(paneContent.querySelector('code'));
+            }
+        }
+
+        function updatePanesForNewModel() {
+            const languages = Object.keys(state.currentModelData);
+            if (languages.includes('MathJax')) {
+                state.leftLang = 'MathJax';
+                state.rightLang = languages.find(l => l === 'CSharp') || languages.find(l => l !== 'MathJax') || 'MathJax';
+            } else {
+                state.leftLang = languages[0] || '';
+                state.rightLang = languages[1] || languages[0] || '';
+            }
+            updatePane('left', state.leftLang);
+            updatePane('right', state.rightLang);
+        }
+
+        function selectLanguage(langName) {
+            if (langName === state.leftLang || !state.currentModelData[langName]) return;
+            state.rightLang = state.leftLang;
+            state.leftLang = langName;
+            updatePane('left', state.leftLang);
+            updatePane('right', state.rightLang);
+        }
+        
+        function setTheme(theme) {
+            document.body.classList.toggle('light-theme', theme === 'light');
+            ui.lightThemeSheet.disabled = (theme === 'dark');
+            ui.darkThemeSheet.disabled = (theme === 'light');
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            setTheme(document.body.classList.contains('light-theme') ? 'dark' : 'light');
+        }
+
+        function initSplitter() {
+            let isDragging = false;
+            const onDragStart = (e) => { e.preventDefault(); isDragging = true; document.body.style.cursor = 'col-resize'; };
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const rect = ui.leftPane.parentElement.getBoundingClientRect();
+                let leftWidth = clientX - rect.left;
+                if (leftWidth < 100) leftWidth = 100;
+                if (leftWidth > rect.width - 100) leftWidth = rect.width - 100;
+                const percent = (leftWidth / rect.width) * 100;
+                ui.leftPane.style.width = `calc(${percent}% - 2.5px)`;
+                ui.rightPane.style.width = `calc(${100 - percent}% - 2.5px)`;
+            };
+            const onDragEnd = () => { isDragging = false; document.body.style.cursor = 'default'; };
+            ui.splitter.addEventListener('mousedown', onDragStart);
+            ui.splitter.addEventListener('touchstart', onDragStart, { passive: false });
+            document.addEventListener('mousemove', onDragMove);
+            document.addEventListener('touchmove', onDragMove, { passive: false });
+            document.addEventListener('mouseup', onDragEnd);
+            document.addEventListener('touchend', onDragEnd);
+        }
+
+        function initPaneToggling() {
+            const toggle = (paneToExpand, paneToShrink) => {
+                const isExpanded = paneToExpand.dataset.isExpanded === 'true';
+                paneToExpand.style.width = isExpanded ? '50%' : '90%';
+                paneToShrink.style.width = isExpanded ? '50%' : '10%';
+                paneToExpand.dataset.isExpanded = !isExpanded;
+                paneToShrink.dataset.isExpanded = false;
+            };
+            ui.leftPane.querySelector('.pane-header').addEventListener('click', () => toggle(ui.leftPane, ui.rightPane));
+            ui.rightPane.querySelector('.pane-header').addEventListener('click', () => toggle(ui.rightPane, ui.leftPane));
+        }
+
+        function populateModelList(models) {
+            ui.modelList.innerHTML = '';
+            models.forEach((model, index) => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.textContent = model.title;
+                btn.onclick = () => selectModel(btn, model.title, model.path);
+                if (index === 0) { // Default the first button in the dynamic list
+                    btn.classList.add('active');
+                }
+                li.appendChild(btn);
+                ui.modelList.appendChild(li);
+            });
+        }
+        
+        async function initialize() {
+            // Initialize UI components that don't depend on data
+            initSplitter();
+            initPaneToggling();
+            setTheme(localStorage.getItem('theme') || 'dark');
+
+            // Set up the default view immediately
+            const defaultPack = window.defaultMathMeldPack;
+            ui.mainTitle.textContent = defaultPack.title;
+            state.currentModelData = {};
+            defaultPack.snippets.forEach(snippet => {
+                if (!state.currentModelData[snippet.language]) {
+                    state.currentModelData[snippet.language] = {};
+                }
+                state.currentModelData[snippet.language][snippet.variant || 'Simple'] = snippet.code;
+            });
+            populateLanguageSelector(Object.keys(state.currentModelData));
+            updatePanesForNewModel();
+
+            // Then, try to load the full list for the side menu
+            try {
+                const { models } = await import('./models.mjs');
+                populateModelList(models);
+            } catch(e) {
+                console.warn("models.mjs not found, running with default model only.", e);
+                const defaultModelInfo = [{ title: window.defaultMathMeldPack.title, path: 'default' }];
+                populateModelList(defaultModelInfo);
+            }
+        }
+        
+        // --- Global Namespace ---
+        window.mathmeld = { selectLanguage, toggleTheme };
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', initialize);
+    </script>
+</body>
+</html>
 
