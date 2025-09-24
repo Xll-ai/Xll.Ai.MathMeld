@@ -27,6 +27,7 @@ The process involves cloning the source code from GitHub and then using the `go 
     ```bash
     git clone [https://github.com/google/generative-ai-go](https://github.com/google/generative-ai-go)
     ```
+
     This will create a new directory named `generative-ai-go`.
 
 2.  **Navigate to the Directory**: Change your current directory to the `gemincli` folder within the cloned repository:
