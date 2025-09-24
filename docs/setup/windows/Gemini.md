@@ -3,7 +3,6 @@
 
 ### `GeminiCLI_Setup.md`
 
-```markdown
 # GeminiCLI Setup Guide
 
 This guide covers how to download and install `gemincli`, the command-line interface for Google's Gemini models.
