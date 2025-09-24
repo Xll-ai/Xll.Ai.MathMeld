@@ -12,6 +12,12 @@ First, download the official installer for your operating system from the Go web
 
 Select the package for your operating system (Windows, macOS, or Linux).
 
+In our case Windows on left
+
+<img width="1242" height="261" alt="image" src="https://github.com/user-attachments/assets/75026e61-c09e-40e4-a23c-6ec33729ef6e" />
+
+
+
 ---
 
 ## 2. Installation Steps
