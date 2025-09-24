@@ -5,9 +5,6 @@
 
 This guide provides the steps to install the Go programming language on your system. 🚀
 
-# ![Go logo](https://raw.githubusercontent.com/Xll-ai/Xll.Ai.MathMeld/main/docs/images/Icon_ProgLanguage__256x256_Go.png) Go Installation Guide
-
-This guide provides the steps to install the Go programming language on your system. 🚀
 
 ---
 
