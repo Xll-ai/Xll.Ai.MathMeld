@@ -45,3 +45,21 @@ You can use the official package installer or the Homebrew package manager.
 **Using Homebrew (Recommended):**
 ```bash
 brew install go
+
+## 3. Windows - What the Install Looks like
+
+On Windows, Go installs under **Program Files** by default and uses your home directory as the workspace. Add both Go’s `bin` folders to **PATH** so the `go` tool and your installed binaries are available in any terminal.
+
+- **GOROOT (default):** `C:\Program Files\Go`
+- **GOPATH (default):** `%USERPROFILE%\go`
+- **GOBIN (default):** _unset_ → `%GOPATH%\bin`
+- **GOCACHE (default):** `%LocalAppData%\go-build`
+- **Module cache:** `%GOPATH%\pkg\mod`
+- **Go env config file:** `%AppData%\go\env`
+- **PATH suggestion (System/User Environment Variables):**
+
+### Powershell Example
+
+<img width="813" height="287" alt="image" src="https://github.com/user-attachments/assets/03d02c03-3c24-4bd0-ba29-3db642cdca8e" />
+
+
