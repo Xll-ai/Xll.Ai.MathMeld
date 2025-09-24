@@ -64,6 +64,3 @@ On Windows, Go installs under **Program Files** by default and uses your home di
 <img width="813" height="287" alt="image" src="https://github.com/user-attachments/assets/f25e25cd-803b-47ca-b9b9-0d1ce0bcf78a" />
 
 
-<img width="813" height="287" alt="image" src="https://github.com/user-attachments/assets/03d02c03-3c24-4bd0-ba29-3db642cdca8e" />
-
-
