@@ -16,6 +16,8 @@ In our case Windows on left
 
 <img width="1242" height="261" alt="image" src="https://github.com/user-attachments/assets/75026e61-c09e-40e4-a23c-6ec33729ef6e" />
 
+<img width="1237" height="407" alt="image" src="https://github.com/user-attachments/assets/644bf037-81a6-40b9-9755-ae9f48a8c1a0" />
+
 
 
 ---
