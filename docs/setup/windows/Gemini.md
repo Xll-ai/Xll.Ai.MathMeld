@@ -48,3 +48,5 @@ To confirm that GeminiCLI is installed and ready to use, run the help command:
 ```bash
 gemincli -h
 ```
+
+
