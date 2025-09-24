@@ -24,6 +24,7 @@ Before you start, make sure you have the following installed on your system:
 The process involves cloning the source code from GitHub and then using the `go install` command.
 
 1.  **Clone the Repository**: Open your terminal and run the following command to download the source code:
+
     ```bash
     git clone [https://github.com/google/generative-ai-go](https://github.com/google/generative-ai-go)
     ```
@@ -31,11 +32,13 @@ The process involves cloning the source code from GitHub and then using the `go 
     This will create a new directory named `generative-ai-go`.
 
 2.  **Navigate to the Directory**: Change your current directory to the `gemincli` folder within the cloned repository:
+
     ```bash
     cd generative-ai-go/cmd/gemincli
     ```
 
 3.  **Install the Tool**: Run the `go install` command. This will compile the source code and place the `gemincli` executable in your Go bin directory, making it accessible from anywhere in your terminal.
+
     ```bash
     go install .
     ```
