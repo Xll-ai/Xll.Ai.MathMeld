@@ -1,5 +1,5 @@
 
-<img width="1242" height="261" alt="image" src="https://github.com/Xll-ai/Xll.Ai.MathMeld/blob/main/docs/images/Icon_ProgLanguage__256x256_Go.png" />
+<img alt="image" src="https://github.com/Xll-ai/Xll.Ai.MathMeld/blob/main/docs/images/Icon_ProgLanguage__256x256_Go.png" />
 # Go Installation Guide
 
 This guide provides the steps to install the Go programming language on your system. 🚀
