@@ -45,6 +45,7 @@ You can use the official package installer or the Homebrew package manager.
 **Using Homebrew (Recommended):**
 ```bash
 brew install go
+```
 
 ## 3. Windows - What the Install Looks like
 
